@@ -81,7 +81,7 @@ Displays the application's DELETE routes removing a specified product, category 
 
 GitHub Repo: https://github.com/jsamborski310/the-shop
 
-Loom Video: https://www.loom.com/share/24ded63043b9419a88064b086b357f94
+Loom Video: https://www.loom.com/share/901e1b9a6ab04adabb6988828836bc5d
 
 
 ## Questions
