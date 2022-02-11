@@ -6,8 +6,6 @@ class Category extends Model {}
 
 Category.init(
   {
-    // Define columns
-    // Don't need to add ID. It is done automatically.
     id: {
       type: DataTypes.INTEGER,
       allowNull: false,

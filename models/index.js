@@ -1,22 +1,31 @@
-// import models
 const Product = require('./Product');
 const Category = require('./Category');
 const Tag = require('./Tag');
 const ProductTag = require('./ProductTag');
 
-// --One to many for the first two. Always need to define to both sides. How one relates to another, and how that one relates back. 
 
-// Products (A) belongsTo Category (B)
-Product.belongsTo(Category);
+// Products belongs to Categories
+Product.belongsTo(Category, {
+  foreignKey: 'category_id',
+});
 
 // Categories have many Products
-Category.hasMany(Product);
+Category.hasMany(Product, {
+  foreignKey: 'category_id',
+});
 
-// Products belongToMany Tags (through ProductTag)
-Product.belongsToMany(Tag, {through: ProductTag});
+// Products belong to many Tags (through ProductTag)
+Product.belongsToMany(Tag, {
+  through: ProductTag,
+  foreignKey: 'product_id',
 
-// Tags belongToMany Products (through ProductTag)
-Tag.belongsToMany(Product, {through: ProductTag});
+});
+
+// Tags belong to many Products (through ProductTag)
+Tag.belongsToMany(Product, {
+  through: ProductTag,
+  foreignKey: 'tag_id',
+});
 
 module.exports = {
   Product,

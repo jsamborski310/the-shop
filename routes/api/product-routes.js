@@ -1,17 +1,23 @@
 const router = require('express').Router();
 const { Product, Category, Tag, ProductTag } = require('../../models');
 
-// The `/api/products` endpoint
 
-// GET ALL PRODUCTS
+
+// GET ALL PRODUCTS ------------//
 router.get('/', async (req, res) => {
   // find all products
   // be sure to include its associated Category and Tag data
   try {
   const products = await Product.findAll({
     include: [
-      {model: Category},
-      {model: Tag},
+      {
+        model: Category,
+        attributes: ['id', 'category_name']
+      },
+      {
+        model: Tag, 
+        attributes: ['id', 'tag_name']
+      },
     ],
   });
   res.status(200).json(products);
@@ -22,7 +28,7 @@ router.get('/', async (req, res) => {
 
 });
 
-// GET ONE PRODUCT
+// GET A PRODUCT BY ID ------------//
 router.get('/:id', async (req, res) => {
   // find a single product by its `id`
   // be sure to include its associated Category and Tag data
@@ -30,8 +36,14 @@ router.get('/:id', async (req, res) => {
 
     const product = await Product.findByPk(req.params.id, {
       include: [
-        {model: Category},
-        {model: Tag}
+        {
+          model: Category, 
+          attributes: ['id', 'category_name']
+        },
+        {
+          model: Tag,
+          attributes: ['id', 'tag_name']
+        }
       ],
     })
 
@@ -43,26 +55,26 @@ router.get('/:id', async (req, res) => {
     res.json(product);
 
   }
-  // res.json({success:true, hit: "Get Single Product"});
+
     catch (err) {
       res.status(500).json(err);
   }
 });
 
-// CREATE NEW PRODUCT
+// CREATE NEW PRODUCT ------------//
 router.post('/', (req, res) => {
 
     //  Create a new product based on the data provided in req.body.
 
 
-    // Product.create(req.body)
+    Product.create(req.body)
 
-    const product = Product.create({
-      product_name: req.body.product_name,
-      price: req.body.price,
-      stock: req.body.price,
+    // const product = Product.create({
+    //   product_name: req.body.product_name,
+    //   price: req.body.price,
+    //   stock: req.body.price,
 
-    })
+    // })
   
 
     // Get our newly created product.
@@ -90,7 +102,7 @@ router.post('/', (req, res) => {
 
 
 
-// UPDATE PRODUCT
+// UPDATE PRODUCT BY ID ------------//
 router.put('/:id', (req, res) => {
   // update product data
   Product.update(req.body, {
@@ -150,8 +162,6 @@ router.delete('/:id', async (req, res) => {
     res.status(500).json(err);
   }
 
-  
-  // res.json({success:true, hit: "Delete Product"});
 });
 
 module.exports = router;
